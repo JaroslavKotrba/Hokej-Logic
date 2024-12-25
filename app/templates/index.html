@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Social Media Meta Tags -->
+    <meta property="og:title" content="Hokejový Chatbot 'Hokej-Logic'">
+    <meta property="og:description" content="Váš hokejový specialista">
+    <meta property="og:image" content="{{ url_for('static', path='/pic/hokej-white.png') }}">
+    <meta property="og:type" content="website">
+
+    <!-- Title -->
+    <title>Hokejový Chatbot 'Hokej-Logic'</title>
+    <meta name="description" content="Váš hokejový pomocník">
+    <meta name="keywords" content="hokej, extraliga">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ url_for('static', path='/pic/hokej-white.png') }}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ url_for('static', path='/pic/hokej-white.png') }}">
+    <link rel="apple-touch-icon" sizes="192x192" href="{{ url_for('static', path='/pic/hokej-white.png') }}">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}">
+
+    <!-- Paper plane icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <!-- Chat Widget Container -->
+    <div class="chat-widget-container">
+        <!-- Main Chat Widget -->
+        <div id="chatWidget" class="chat-widget">
+            <!-- Header -->
+            <div class="chat-widget-header">
+                <img src="{{ url_for('static', path='/pic/hokej-white.png') }}" alt="Hokej-Logic Logo" width="52"
+                    height="52">
+                <h1>Hokejový Chatbot</h1>
+                <div class="status-indicator"></div>
+            </div>
+
+            <!-- Messages Container -->
+            <div class="chat-widget-messages" id="chatMessages"></div>
+
+            <!-- Input Area -->
+            <div class="chat-widget-input">
+                <div class="input-wrapper">
+                    <textarea id="userInput" placeholder="Napište svou zprávu..." rows="2"></textarea>
+                    <button class="send-button" id="sendButton">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Clear Button -->
+            <button id="clearButton" class="clear-button">Vymazat konverzaci</button>
+
+            <!-- Footer Message -->
+            <div class="love-message">
+                <em>@jaro <span style="color: #437ffe">&hearts;</span></em>
+            </div>
+        </div>
+
+        <!-- Toggle Button -->
+        <button id="toggleChat" class="chat-widget-button">
+            <i class="fas fa-comments"></i>
+        </button>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', path='/script.js') }}"></script>
+</body>
+
+</html>
