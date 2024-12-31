@@ -264,6 +264,63 @@
     }
 }
 
+/* Quick options */
+.quick-options-header {
+    padding: 0.5rem 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #eee;
+    background: #f9f9f9;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.toggle-quick-options {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.3rem;
+    color: #437ffe;
+    transition: transform 0.3s ease;
+}
+
+.toggle-quick-options.collapsed i {
+    transform: rotate(180deg);
+}
+
+.quick-options {
+    max-height: 200px;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding: 0.8rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.quick-options.collapsed {
+    max-height: 0;
+    padding: 0;
+    border: none;
+}
+
+.quick-option {
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 16px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+}
+
+.quick-option:hover {
+    background: #e3f2fd;
+    border-color: #437ffe;
+    color: #437ffe;
+}
+
 /* Input area styling */
 .chat-widget-input {
     padding: 0.8rem;
@@ -383,7 +440,22 @@
         gap: 8px;
     }
 
-    /* Additional mobile-specific adjustments... */
+    /* Mobile quick options */
+    .quick-options-header {
+        padding: 0.4rem 0.6rem;
+    }
+
+    .quick-options {
+        padding: 0.6rem;
+        max-height: 120px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .quick-option {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
 }
 
 /* Landscape mode adjustments for mobile */
