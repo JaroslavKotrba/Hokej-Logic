@@ -322,9 +322,30 @@ class CoreChatbot:
     def _categorize_message(self, message: str) -> str:
         """Categorize the incoming message based on content"""
         categories = {
-            "tabulky": ["goly", "tabulka", "seznam", "graf", "grafy"],
-            "porovnani hracu": ["hrac", "tym", "porovnani", "srovnani"],
-            "tredy": ["vitezstvi", "prohra", "remiza", "vysledek", "soutez"],
+            "hraci": [
+                "hrac",
+                "hraci",
+                "hrace",
+                "strelec",
+                "strelci",
+                "strelce",
+                "tabulky",
+                "gamelog",
+                "trend",
+                "porovnani",
+            ],
+            "formace": ["formace", "formaci", "dvojice", "kombinace"],
+            "videomapy": [
+                "videomapy",
+                "video",
+                "strely",
+                "heatmapa",
+                "prihravky",
+                "vhazovani",
+            ],
+            "brankari": ["brankar", "brankari", "mapa strel", "najezdy"],
+            "zapasy": ["zapas", "zapasy", "vizualizace", "grafiky", "report"],
+            "tymy": ["tym", "tymy"],
         }
 
         message_normalized = self._remove_diacritics(message).lower()
