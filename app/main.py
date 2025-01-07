@@ -14,9 +14,6 @@
 # conda env export --name hokej_logic > environment.yml
 # pip list --format=freeze > requirements.txt
 
-# TODO: categories update
-# TODO: preselected options
-
 import os
 from typing import List, Dict
 from datetime import datetime
@@ -66,7 +63,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "https://jaroslavkotrba.com",
-        "https://mat-gram-c3a70edf9532.herokuapp.com",  # Heroku
+        "https://hokej-logic-698f50f96dfe.herokuapp.com",  # Heroku
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -284,7 +281,7 @@ class CoreChatbot:
                     - Publikované články a analýzy
 
                     Pokud požadovaná informace není na webu dostupná, směřujte uživatele na nejbližší relevantní obsah.
-                    Vynechte zbytečné fráze a dlouhé nabídky další pomoci.
+                    Neopakujte zadanou otázku, vynechte zbytečné fráze jako že jste na hokejlogic.cz a dlouhé nabídky další pomoci.
                     """,
                 ),
                 (
