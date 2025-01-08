@@ -62,7 +62,7 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://jaroslavkotrba.com",
+        "https://hokejlogic.cz",
         "https://hokej-logic-698f50f96dfe.herokuapp.com",  # Heroku
     ],
     allow_credentials=True,

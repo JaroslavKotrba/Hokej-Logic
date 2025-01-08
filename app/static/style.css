@@ -405,6 +405,10 @@
     font-size: small;
 }
 
+.heart {
+    color: #437ffe;
+}
+
 /* Mobile responsive styles for screens <= 480px */
 @media (max-width: 480px) {
 
