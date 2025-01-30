@@ -461,7 +461,7 @@ class CoreChatbot:
         ]
 
 
-# Initialize chatbot
+# Chatbot initialization
 try:
     config = ChatbotConfig()
     chatbot = CoreChatbot(config)
