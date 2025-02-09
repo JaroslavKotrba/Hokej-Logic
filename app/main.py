@@ -52,6 +52,9 @@ from dotenv import load_dotenv
 # Path
 os.getcwd()
 
+# Port configuration for Heroku
+port = int(os.getenv("PORT", 8000))
+
 # Configure logging to track chatbot operations and errors
 logging.basicConfig(
     level=logging.INFO,
@@ -100,7 +103,6 @@ async def verify_api_key(api_key: str = Security(api_key_header)):
 
 
 # Database initialization
-port = int(os.getenv("PORT", 8000))  # Heroku
 Base = declarative_base()  # Base
 
 
