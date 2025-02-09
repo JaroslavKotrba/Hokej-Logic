@@ -50,6 +50,7 @@ def load_multiple_pdfs(file_paths: List[str]) -> List[Document]:
 
 pdf_files = [  # add new documents here
     "../data/pdf/napoveda.pdf",
+    "../data/pdf/test.pdf",
 ]
 
 documents = load_multiple_pdfs(pdf_files)
