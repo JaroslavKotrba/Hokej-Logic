@@ -13,7 +13,7 @@ from dotenv import load_dotenv
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
-    filename=f'logs/chatbot_{datetime.now().strftime("%Y%m%d")}.log',
+    datefmt="%Y-%m-%d %H:%M:%S",
 )
 logger = logging.getLogger(__name__)
 
@@ -47,11 +47,13 @@ class CoreChatbot:
     def __init__(self, config: ChatbotConfig):
         self.config = config
         self.conversation_history: List[Dict[str, str]] = []
+        logger.info(f"Loading models.")
 
         # Initialize embedding model for text vectorization
         self.embeddings_model = OpenAIEmbeddings(
             model="text-embedding-ada-002", openai_api_key=config.openai_api_key
         )
+        logger.info(f"Successfully loaded embedding model.")
 
         # Set up the main language model for generating responses
         self.chat_model = ChatOpenAI(
@@ -59,6 +61,7 @@ class CoreChatbot:
             temperature=config.temperature,
             openai_api_key=config.openai_api_key,
         )
+        logger.info(f"Successfully loaded {config.model_name}.")
 
         # Initialize vector store and retrieval system
         self.vector_store = self._load_vector_store()
