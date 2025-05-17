@@ -95,10 +95,13 @@ templates = Jinja2Templates(directory="app/templates")
 api_key_header = APIKeyHeader(name="X-API-Key")
 
 
+# API key verification for protected endpoints
 async def verify_api_key(api_key: str = Security(api_key_header)):
     """Verify the API key for protected endpoints"""
     if api_key != config.admin_api_key:  # Using the admin_api_key from config
-        raise HTTPException(status_code=403, detail="Could not validate API key")
+        raise HTTPException(
+            status_code=403, detail="Could not validate API key (wrong API key)"
+        )
     return api_key
 
 
