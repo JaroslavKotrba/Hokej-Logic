@@ -48,9 +48,17 @@ def load_multiple_pdfs(file_paths: List[str]) -> List[Document]:
     return documents
 
 
+# List all pdf files in the directory
+directory = "../data/pdf"
+for file in os.listdir(directory):
+    if os.path.isfile(os.path.join(directory, file)):
+        print(file)
+
 pdf_files = [  # add new documents here
-    "../data/pdf/napoveda.pdf",
     "../data/pdf/test.pdf",
+    "../data/pdf/napoveda.pdf",
+    "../data/pdf/hl_mapa_aplikace_v1.pdf",
+    "../data/pdf/hl_chatbot_metriky_v1.pdf",
 ]
 
 documents = load_multiple_pdfs(pdf_files)
