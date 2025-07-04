@@ -1,15 +1,15 @@
 # TO RUN APP
 
 # conda env create -f environment.yml
-# conda create -n mat_gram python=3.12
-# conda env remove -n mat_gram
+# conda create -n hokej_logic python=3.12
+# conda env remove -n hokej_logic
 
 # uvicorn app.main:app --reload
 
 # psycopg2-binary==2.9.9 (Heroku Postgres)
 # mysqlclient==2.2.1 (JAWSDB MySQL)
 
-# conda env export --name mat_gram > environment.yml
+# conda env export --name hokej_logic > environment.yml
 # pip list --format=freeze > requirements.txt
 
 import os

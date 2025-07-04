@@ -76,6 +76,7 @@ dependencies:
       - httpx==0.28.1
       - httpx-sse==0.4.0
       - idna==3.10
+      - iniconfig==2.1.0
       - jinja2==3.1.5
       - jiter==0.8.2
       - jsonpatch==1.33
@@ -93,11 +94,13 @@ dependencies:
       - numpy==2.2.1
       - openai==1.58.1
       - orjson==3.10.12
+      - pluggy==1.6.0
       - propcache==0.2.1
       - pydantic==2.10.4
       - pydantic-core==2.27.2
       - pydantic-settings==2.7.0
       - pypdf2==3.0.1
+      - pytest==8.4.1
       - python-dotenv==1.0.1
       - pyyaml==6.0.2
       - regex==2024.11.6
