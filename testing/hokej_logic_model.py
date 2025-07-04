@@ -218,7 +218,7 @@ def main():
         print("\n=== Virtuální hokejový pomocník ===")
         print("Pro ukončení napište 'quit'")
         print("Pro vymazání historie napište 'clear'")
-        print("Jak vám mohu dnes pomoci s péčí o miminko?\n")
+        print("Jak vám mohu dnes pomoci s navigací na webu hokejlogic.cz?\n")
 
         while True:
             user_input = input("Vy: ").strip()

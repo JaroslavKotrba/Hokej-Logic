@@ -141,9 +141,6 @@ class CoreChatbot:
                     - Aktuální databáze statistik na webu
                     - Publikované články a analýzy
 
-                    Formát odpovědí:
-                    - Když je vzorec preveden an procenta pouzij *100 nebo dej predesly vypocet do ()*100
-
                     Pokud požadovaná informace není na webu dostupná, směřujte uživatele na nejbližší relevantní obsah.
                     Neopakujte zadanou otázku, vynechte zbytečné fráze jako že jste na hokejlogic.cz a dlouhé nabídky další pomoci.
                     """,
