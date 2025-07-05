@@ -1,7 +1,7 @@
 # TEST
 
 # pytest --disable-warnings
-# pytest tests/test.py -v --disable-warnings
+# pytest tests/test_health.py -v --disable-warnings
 
 from starlette import status
 from fastapi.testclient import TestClient
