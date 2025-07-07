@@ -32,7 +32,7 @@ const ChatWidget = () => {
 
     const quickOptions = [
         { text: 'Kde najdu nejlepší střelce? 🏒' },
-        { text: 'Co se skrývá po zkratkou TOI..? ⏱️' },
+        { text: 'Co se skrývá pod zkratkou TOI..? ⏱️' },
         { text: 'Jak filtrovat hráče v tabulce? 🔍' }
     ];
 
