@@ -58,7 +58,7 @@ pdf_files = [  # add new documents here
     "../data/pdf/test.pdf",
     "../data/pdf/napoveda.pdf",
     "../data/pdf/hl_mapa_aplikace_v1.pdf",
-    "../data/pdf/hl_chatbot_metriky_v1.pdf",
+    "../data/pdf/hl_chatbot_metriky_v2.pdf",
 ]
 
 documents = load_multiple_pdfs(pdf_files)
