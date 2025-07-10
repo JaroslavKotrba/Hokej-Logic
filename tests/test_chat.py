@@ -17,7 +17,9 @@ client = TestClient(app)
 
 
 def test_chat_endpoint_success():
-    """Test chat endpoint with context: initial and follow-up message using the same session_id"""
+    """
+    Test chat endpoint with context: initial and follow-up message using the same session_id
+    """
     session_id = "test_123"
 
     first_request = {"message": "Co znamená zkratka P.En?", "session_id": session_id}

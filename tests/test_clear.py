@@ -17,7 +17,9 @@ client = TestClient(app)
 
 
 def test_clear_endpoint_success():
-    """Test successful clearing of conversation history"""
+    """
+    Test successful clearing of conversation history
+    """
     response = client.post("/clear")
     assert response.status_code == status.HTTP_200_OK
 
