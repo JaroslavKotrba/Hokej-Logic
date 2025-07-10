@@ -18,9 +18,9 @@ client = TestClient(app)
 
 def test_chat_endpoint_success():
     """Test successful chat interaction"""
-    payload = {"message": "Co znamená zkratka P.En?", "session_id": "test_123"}
+    request = {"message": "Co znamená zkratka P.En?", "session_id": "test_123"}
 
-    response = client.post("/chat", json=payload)
+    response = client.post("/chat", json=request)
     assert response.status_code == status.HTTP_200_OK
 
     data = response.json()
