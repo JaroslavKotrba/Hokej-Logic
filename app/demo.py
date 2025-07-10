@@ -160,7 +160,7 @@ class Message(BaseModel):
 
 class ChatRequest(BaseModel):
     message: str
-    session_id: str = None
+    session_id: str = ""
 
 
 class ChatResponse(BaseModel):
@@ -215,7 +215,7 @@ class CoreChatbot:
 
         # Set up the main language model for generating responses
         self.chat_model = ChatOpenAI(
-            model_name=config.model_name,
+            model=config.model_name,
             temperature=config.temperature,
             openai_api_key=config.openai_api_key,
         )
@@ -377,7 +377,7 @@ class CoreChatbot:
             ]
         )
 
-    def get_response(self, user_input: str, session_id: str = None) -> str:
+    def get_response(self, user_input: str, session_id: str = "") -> str:
         """Generate a response to user input using the language model.
 
         Updates conversation history and handles any errors during processing.
@@ -562,7 +562,11 @@ async def get_stats(api_key: str = Depends(verify_api_key)):
                     "category": conv.category,
                     "user_message": conv.user_message,
                     "bot_response": conv.bot_response,
-                    "response_time": round(conv.response_time, 2),
+                    "response_time": (
+                        round(float(getattr(conv, "response_time", 0)), 2)
+                        if getattr(conv, "response_time", None) is not None
+                        else None
+                    ),
                     "tokens_used": conv.tokens_used,
                     "error_occurred": bool(conv.error_occurred),
                 }
@@ -575,7 +579,7 @@ async def get_stats(api_key: str = Depends(verify_api_key)):
                     round(avg_response_time, 2) if avg_response_time else 0
                 ),
                 "error_rate": round(error_rate * 100, 2) if error_rate else 0,
-                "category_distribution": dict(category_counts),
+                "category_distribution": {row[0]: row[1] for row in category_counts},
                 "conversations": conversation_history,
             }
     except Exception as e:

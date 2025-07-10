@@ -30,7 +30,7 @@ class Message(BaseModel):
 
 class ChatRequest(BaseModel):
     message: str
-    session_id: str = None
+    session_id: str = ""
 
 
 class ChatResponse(BaseModel):

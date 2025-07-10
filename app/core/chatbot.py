@@ -61,7 +61,7 @@ class CoreChatbot:
 
         # Set up the main language model for generating responses
         self.chat_model = ChatOpenAI(
-            model_name=config.model_name,
+            model=config.model_name,
             temperature=config.temperature,
             openai_api_key=config.openai_api_key,
         )
@@ -223,7 +223,7 @@ class CoreChatbot:
             ]
         )
 
-    def get_response(self, user_input: str, session_id: str = None) -> str:
+    def get_response(self, user_input: str, session_id: str = "") -> str:
         """Generate a response to user input using the language model.
 
         Updates conversation history and handles any errors during processing.
