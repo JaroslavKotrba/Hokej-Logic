@@ -33,10 +33,10 @@ class ChatbotConfig:
             raise ValueError("ADMIN_API_KEY is not available in .env")
 
         self.model_name = "gpt-4o-mini"
-        self.temperature = 0.4  # Controls randomness in responses
+        self.temperature = 0.3  # Controls randomness in responses
         self.chunk_size = 1000  # Size of text chunks for processing
         self.chunk_overlap = 200  # Overlap between chunks to maintain context
-        self.top_k_results = 5  # Number of similar chunks to retrieve
+        self.top_k_results = 3  # Number of similar chunks to retrieve
         self.max_history = 4  # Maximum number of conversation turns to remember
 
 
