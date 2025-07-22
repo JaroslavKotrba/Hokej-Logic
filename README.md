@@ -138,40 +138,6 @@ The system automatically categorizes messages:
 - `tymy` - Team-related information
 - `ostatni` - General queries
 
-## 📊 Monitoring & Analytics
-
-The application provides comprehensive monitoring:
-
-### Health Check (`/health`)
-- System component status
-- Memory usage and uptime
-- Configuration verification
-- Model and vector store status
-
-### Usage Statistics (`/stats`) 
-- Total interactions and response times
-- Error rates and category distribution
-- Complete conversation history
-- Performance metrics
-
-## 🔧 Development Commands
-
-```bash
-# Environment management
-conda env export --name hokej_logic > environment.yml
-conda env remove -n hokej_logic
-
-# Dependencies
-pip list --format=freeze > requirements.txt
-
-# Development server
-uvicorn app.main:app --reload --log-level debug
-
-# Database operations (if using migrations)
-alembic revision --autogenerate -m "Description"
-alembic upgrade head
-```
-
 ## 🔒 Security Features
 
 - **API Key Protection**: Admin endpoints secured with custom API keys
@@ -219,4 +185,4 @@ For questions, support, or feature requests, please contact the development team
 
 ---
 
-**Happy Hockey Analytics! 🏒📊**
+**Happy Hockey Analytics! 🏒**
