@@ -28,7 +28,10 @@ api_key_header = APIKeyHeader(name="X-API-Key")
 
 # Initialize router with required dependencies
 def init_router(config_instance, chatbot_instance, start_time):
-    """Initialize the routers with required dependencies"""
+    """
+    Initialize the routers with required dependencies
+    """
+
     global config, chatbot, START_TIME
     config = config_instance
     chatbot = chatbot_instance
@@ -37,7 +40,10 @@ def init_router(config_instance, chatbot_instance, start_time):
 
 # API key verification for protected endpoints
 async def verify_api_key(api_key: str = Security(api_key_header)):
-    """Verify the API key for protected endpoints"""
+    """
+    Verify the API key for protected endpoints
+    """
+
     if api_key != config.admin_api_key:
         raise HTTPException(
             status_code=403, detail="Could not validate API key (wrong API key)"
@@ -56,6 +62,7 @@ async def chat(request: ChatRequest):
     """
     Send a message to the chatbot and get a response
     """
+
     try:
         # Use provided session_id or get current one from chatbot
         session_id = request.session_id or chatbot.current_session_id
@@ -73,6 +80,7 @@ async def clear_conversation():
     """
     Clear the conversation history
     """
+
     try:
         chatbot.clear_conversation()
         return ClearResponse(
@@ -87,7 +95,10 @@ async def clear_conversation():
 
 @router.get("/stats")
 async def get_stats(api_key: str = Depends(verify_api_key)):
-    """Get statistics about chat interactions including full conversation history"""
+    """
+    Get statistics about chat interactions including full conversation history
+    """
+
     try:
         with next(db.get_session()) as session:
             # Basic statistics

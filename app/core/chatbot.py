@@ -20,7 +20,9 @@ logger = logging.getLogger(__name__)
 
 
 class ChatbotConfig:
-    """Class for chatbot configuration"""
+    """
+    Class for chatbot configuration
+    """
 
     def __init__(self):
         logger.info("Initializing ChatbotConfig")
@@ -54,10 +56,11 @@ class ChatbotConfig:
 
 
 class CoreChatbot:
-    """Core chatbot implementation.
-
+    """
+    Core chatbot implementation
     Integrates OpenAI's language models with FAISS vector storage
-    for context-aware responses"""
+    for context-aware responses
+    """
 
     def __init__(self, config: ChatbotConfig):
         self.config = config
@@ -127,10 +130,11 @@ class CoreChatbot:
         logger.info("CoreChatbot initialization completed successfully")
 
     def _load_vector_store(self) -> FAISS:
-        """Load the FAISS vector store from disk.
+        """
+        Load the FAISS vector store from data/vector_store
+        Contains pre-processed knowledge base
+        """
 
-        Contains pre-processed knowledge base.
-        Raises Exception if loading fails."""
         logger.debug("Attempting to load FAISS vector store from data/vector_store")
         try:
             vector_store = FAISS.load_local(
@@ -145,10 +149,11 @@ class CoreChatbot:
             raise
 
     def _create_prompt_template(self) -> ChatPromptTemplate:
-        """Create the conversation prompt template.
+        """
+        Create the conversation prompt template
+        Defines the chatbot's personality
+        """
 
-        Defines the chatbot's personality, expertise areas, and response guidelines
-        for providing advice."""
         logger.debug("Creating prompt template for conversation")
         try:
             prompt = ChatPromptTemplate.from_messages(
@@ -208,7 +213,10 @@ class CoreChatbot:
             raise
 
     def _remove_diacritics(self, text: str) -> str:
-        """Remove diacritical marks from Czech"""
+        """
+        Remove diacritical marks from Czech
+        """
+
         logger.debug(f"Removing diacritics from text: {text[:50]}...")
         replacements = {
             "á": "a",
@@ -232,7 +240,10 @@ class CoreChatbot:
         return result
 
     def _categorize_message(self, message: str) -> str:
-        """Categorize the incoming message based on content"""
+        """
+        Categorize the incoming message based on content
+        """
+
         logger.debug(f"Categorizing message: {message[:50]}...")
         categories = {
             "hraci": [
@@ -271,9 +282,10 @@ class CoreChatbot:
         return "ostatni"
 
     def format_chat_history(self) -> str:
-        """Format the conversation history for context inclusion.
+        """
+        Format the conversation history for context inclusion
+        """
 
-        Returns a string of the last N interactions based on max_history setting."""
         history_length = len(self.conversation_history)
         max_history = self.config.max_history
         logger.debug(
@@ -290,10 +302,9 @@ class CoreChatbot:
         return formatted_history
 
     def get_response(self, user_input: str, session_id: str = "") -> str:
-        """Generate a response to user input using the language model.
-
-        Updates conversation history and handles any errors during processing.
-        Returns an error message if response generation fails."""
+        """
+        Generate a response to user input using the language model
+        """
 
         # DB values
         session_id = session_id or self.current_session_id
@@ -417,13 +428,19 @@ class CoreChatbot:
             return error_msg
 
     def clear_conversation(self) -> None:
-        """Deleting the conversation history"""
+        """
+        Deleting the conversation history
+        """
+
         history_length = len(self.conversation_history)
         self.conversation_history.clear()
         logger.info(f"Conversation history cleared - Removed {history_length} messages")
 
     def get_conversation_history(self) -> List[Message]:
-        """Returns the conversation history in the format required by the API"""
+        """
+        Returns the conversation history in the format required by the API
+        """
+
         history_length = len(self.conversation_history)
         logger.debug(f"Retrieving conversation history - {history_length} messages")
         return [

@@ -79,7 +79,10 @@ app.include_router(endpoints.router)
 
 @app.on_event("startup")
 async def startup_event():
-    """Application startup event"""
+    """
+    Application startup event
+    """
+
     logger.info(
         "🚀 Hokej Logic Chatbot API starting up locally at: http://127.0.0.1:8000"
     )

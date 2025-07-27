@@ -7,7 +7,9 @@ from ..database.database import Base
 
 
 class ChatInteraction(Base):
-    """Model for storing chat interactions"""
+    """
+    Model for storing chat interactions
+    """
 
     __tablename__ = "chat_interactions"
 

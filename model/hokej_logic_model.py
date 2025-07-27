@@ -19,10 +19,9 @@ logger = logging.getLogger(__name__)
 
 
 class ChatbotConfig:
-    """Configuration class that manages all chatbot parameters and settings.
-
-    Handles environment variables, model settings, and conversation parameters.
-    Raises ValueError if required API keys are missing."""
+    """
+    Class for chatbot configuration
+    """
 
     def __init__(self):
         load_dotenv()
@@ -39,10 +38,11 @@ class ChatbotConfig:
 
 
 class CoreChatbot:
-    """Core chatbot implementation.
-
+    """
+    Core chatbot implementation
     Integrates OpenAI's language models with FAISS vector storage
-    for context-aware responses"""
+    for context-aware responses
+    """
 
     def __init__(self, config: ChatbotConfig):
         self.config = config
@@ -82,10 +82,11 @@ class CoreChatbot:
         )
 
     def _load_vector_store(self) -> FAISS:
-        """Load the FAISS vector store from disk.
+        """
+        Load the FAISS vector store from data/vector_store
+        Contains pre-processed knowledge base
+        """
 
-        Contains pre-processed knowledge base.
-        Raises Exception if loading fails."""
         try:
             return FAISS.load_local(
                 "../data/vector_store",
@@ -97,10 +98,11 @@ class CoreChatbot:
             raise
 
     def _create_prompt_template(self) -> ChatPromptTemplate:
-        """Create the conversation prompt template.
+        """
+        Create the conversation prompt template
+        Defines the chatbot's personality
+        """
 
-        Defines the chatbot's personality, expertise areas, and response guidelines
-        for providing advice."""
         return ChatPromptTemplate.from_messages(
             [
                 (
@@ -153,9 +155,10 @@ class CoreChatbot:
         )
 
     def format_chat_history(self) -> str:
-        """Format the conversation history for context inclusion.
+        """
+        Format the conversation history for context inclusion
+        """
 
-        Returns a string of the last N interactions based on max_history setting."""
         return "\n".join(
             [
                 f"{'Uživatel' if msg['role'] == 'user' else 'Asistent'}: {msg['content']}"
@@ -164,10 +167,10 @@ class CoreChatbot:
         )
 
     def get_response(self, user_input: str) -> str:
-        """Generate a response to user input using the language model.
+        """
+        Generate a response to user input using the language model
+        """
 
-        Updates conversation history and handles any errors during processing.
-        Returns an error message if response generation fails."""
         try:
             # Updating history
             self.conversation_history.append({"role": "user", "content": user_input})
@@ -194,18 +197,19 @@ class CoreChatbot:
             return error_msg
 
     def clear_conversation(self) -> None:
-        """Reset the conversation history.
+        """Deleting the conversation history"""
 
-        Clears all stored messages and logs the action."""
         self.conversation_history.clear()
         logger.info("Conversation history cleared")
 
 
 def main():
-    """Main application entry point.
+    """
+    Main application entry point
+    Initializes the chatbot and handles the main conversation loop
+    Provides basic command processing for quitting and clearing history
+    """
 
-    Initializes the chatbot and handles the main conversation loop.
-    Provides basic command processing for quitting and clearing history."""
     try:
         config = ChatbotConfig()
         chatbot = CoreChatbot(config)

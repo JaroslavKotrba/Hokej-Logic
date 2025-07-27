@@ -8,7 +8,9 @@ Base = declarative_base()  # Base
 
 
 class Database:
-    """Connect database"""
+    """
+    Connect to the database
+    """
 
     def __init__(self):
         # Get JAWSDB_URL from Heroku
