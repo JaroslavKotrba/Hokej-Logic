@@ -51,8 +51,9 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://hokejlogic.cz",
+        "https://hokejlogic.cz",  # Prod
         "https://hokej-logic-698f50f96dfe.herokuapp.com",  # Heroku
+        "http://localhost:5173",  # Local React
     ],
     allow_credentials=True,
     allow_methods=["*"],
