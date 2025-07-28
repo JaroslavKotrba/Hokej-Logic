@@ -160,6 +160,7 @@ async def health_check():
     """
     Health check endpoint that monitors critical system components and chatbot status
     """
+
     try:
         # Check if OpenAI integration is working
         openai_status = chatbot.config.openai_api_key is not None
