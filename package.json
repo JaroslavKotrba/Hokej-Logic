@@ -1,0 +1,10 @@
+{
+    "name": "hokej-logic",
+    "version": "1.0.0",
+    "scripts": {
+        "heroku-postbuild": "bash build.sh"
+    },
+    "engines": {
+        "node": "18.x"
+    }
+}

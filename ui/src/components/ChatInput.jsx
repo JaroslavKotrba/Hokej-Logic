@@ -29,7 +29,8 @@ const ChatInput = ({ onSendMessage, onClearChat, isLoading }) => {
     }, [message]);
 
     return (
-        <div className="p-3 pb-1 border-t border-gray-200 bg-white">
+        <div className="p-3 pb-3 bg-white">
+            <div className="h-px bg-gray-200 -mx-3 mb-3 -mt-3"></div>
             <div className="relative flex items-center w-full">
                 <textarea
                     ref={textareaRef}
@@ -65,9 +66,7 @@ const ChatInput = ({ onSendMessage, onClearChat, isLoading }) => {
                 </div>
             </div>
 
-            <div className="text-center w-full mb-3 mt-2 text-xs">
-                <em>@jaro <span className="text-[#437ffe]">♥</span></em>
-            </div>
+
         </div>
     );
 };

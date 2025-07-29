@@ -17,12 +17,12 @@ const MessageRating = ({ messageId, onRate }) => {
     };
 
     return (
-        <div className="flex items-center gap-1 mt-2">
+        <div className="flex items-center gap-0.5 sm:gap-1 mt-2">
             <button
                 onClick={() => handleRate('positive')}
-                className={`p-1 rounded-full transition-colors duration-200 ${rating === 'positive'
-                        ? 'text-green-600 bg-green-100'
-                        : 'text-gray-400 hover:text-green-600 hover:bg-green-50'
+                className={`p-1 transition-colors duration-200 ${rating === 'positive'
+                    ? 'text-green-600'
+                    : 'text-gray-400 hover:text-green-600'
                     }`}
                 title="Označit jako užitečné"
             >
@@ -31,9 +31,9 @@ const MessageRating = ({ messageId, onRate }) => {
 
             <button
                 onClick={() => handleRate('negative')}
-                className={`p-1 rounded-full transition-colors duration-200 ${rating === 'negative'
-                        ? 'text-red-600 bg-red-100'
-                        : 'text-gray-400 hover:text-red-600 hover:bg-red-50'
+                className={`p-1 transition-colors duration-200 ${rating === 'negative'
+                    ? 'text-red-600'
+                    : 'text-gray-400 hover:text-red-600'
                     }`}
                 title="Označit jako neužitečné"
             >

@@ -24,7 +24,7 @@ const QuickOptions = ({ onOptionClick }) => {
 
     return (
         <div className="animate-fade-in">
-            <div className="flex justify-between items-center py-2 px-3 border-t border-gray-200 bg-[#f9f9f9] text-sm text-gray-600">
+            <div className="flex justify-between items-center py-2 px-3 border-t border-gray-200 bg-[#f9f9f9] text-sm text-gray-600 -mx-3 px-6">
                 <span>Časté dotazy</span>
                 <button
                     onClick={toggleCollapse}

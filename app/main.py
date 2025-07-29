@@ -60,8 +60,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Serve static files (CSS, JavaScript)
-app.mount("/static", StaticFiles(directory="app/static"), name="static")
+# Serve React app static files
+if os.path.exists("ui/dist/assets"):
+    app.mount("/assets", StaticFiles(directory="ui/dist/assets"), name="react-assets")
+    logger.info("✅ React assets mounted successfully")
+else:
+    logger.warning("⚠️ React assets not found - API only mode")
 
 # Chatbot initialization
 try:

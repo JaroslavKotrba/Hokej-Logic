@@ -1,8 +1,7 @@
 import os
 import logging
 from fastapi import APIRouter, HTTPException, Request, Depends, Security
-from fastapi.responses import JSONResponse
-from fastapi.templating import Jinja2Templates
+from fastapi.responses import JSONResponse, FileResponse
 from fastapi.security import APIKeyHeader
 from sqlalchemy import func
 from datetime import datetime
@@ -18,9 +17,6 @@ logger = logging.getLogger(__name__)
 
 # Router initialization
 router = APIRouter(tags=["Admin section"])
-
-# Templates initialization - make sure path is relative to main app
-templates = Jinja2Templates(directory="app/templates")
 
 # Admin security initialization
 api_key_header = APIKeyHeader(name="X-API-Key")
@@ -53,8 +49,19 @@ async def verify_api_key(api_key: str = Security(api_key_header)):
 
 # API endpoints
 @router.get("/")
-async def read_root(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+async def root():
+    """
+    Root endpoint - serves React app
+    """
+
+    if os.path.exists("ui/dist/index.html"):
+        return FileResponse("ui/dist/index.html")
+    else:
+        return {
+            "message": "Hokej Logic API",
+            "status": "API is running",
+            "endpoints": {"chat": "/chat", "health": "/health", "stats": "/stats"},
+        }
 
 
 @router.post("/chat", response_model=ChatResponse)
