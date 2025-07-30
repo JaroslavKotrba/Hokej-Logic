@@ -36,6 +36,20 @@ export const chatAPI = {
         }
     },
 
+    // Rate a message
+    rateMessage: async (messageId, rating) => {
+        try {
+            const response = await api.post('/rate', {
+                message_id: messageId,
+                rating: rating, // +1 for thumbs up, -1 for thumbs down, 0 for neutral
+            });
+            return response.data;
+        } catch (error) {
+            console.error('Error rating message:', error);
+            throw new Error(error.response?.data?.detail || 'Failed to rate message');
+        }
+    },
+
     // Get health status
     getHealth: async () => {
         try {

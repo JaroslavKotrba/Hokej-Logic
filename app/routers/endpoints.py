@@ -9,7 +9,14 @@ import time
 import psutil
 
 from ..database.db import db
-from ..schemas.models import ChatInteraction, ChatRequest, ChatResponse, ClearResponse
+from ..schemas.models import (
+    ChatInteraction,
+    ChatRequest,
+    ChatResponse,
+    ClearResponse,
+    RatingRequest,
+    RatingResponse,
+)
 from ..const.constants import VERSION
 
 # Configure logging for this router
@@ -73,9 +80,11 @@ async def chat(request: ChatRequest):
     try:
         # Use provided session_id from frontend
         session_id = request.session_id
-        response = chatbot.get_response(request.message, session_id)
+        response, message_id = chatbot.get_response(request.message, session_id)
         return ChatResponse(
-            response=response, conversation_history=chatbot.get_conversation_history()
+            response=response,
+            conversation_history=chatbot.get_conversation_history(),
+            message_id=message_id,
         )
     except Exception as e:
         logger.error(f"Error in chat endpoint: {str(e)}")
@@ -100,6 +109,46 @@ async def clear_conversation():
         )
 
 
+@router.post("/rate", response_model=RatingResponse)
+async def rate_message(request: RatingRequest):
+    """
+    Rate a message with thumbs up (+1), thumbs down (-1), or neutral (0)
+    """
+
+    try:
+        with next(db.get_session()) as session:
+            # Find the chat interaction by message_id
+            interaction = (
+                session.query(ChatInteraction)
+                .filter(ChatInteraction.id == request.message_id)
+                .first()
+            )
+
+            if not interaction:
+                raise HTTPException(
+                    status_code=404,
+                    detail=f"Message with ID {request.message_id} not found",
+                )
+
+            # Update the rating
+            interaction.rating = request.rating
+            session.commit()
+
+            logger.info(f"Message {request.message_id} rated as {request.rating}")
+
+            return RatingResponse(
+                response_message="Rating successfully updated",
+                message_id=request.message_id,
+                rating=request.rating,
+            )
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error in rate endpoint: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to save rating")
+
+
 @router.get("/stats")
 async def get_stats(api_key: str = Depends(verify_api_key)):
     """
@@ -116,6 +165,30 @@ async def get_stats(api_key: str = Depends(verify_api_key)):
             error_rate = session.query(
                 func.avg(ChatInteraction.error_occurred)
             ).scalar()
+
+            # Rating statistics
+            rating_stats = (
+                session.query(ChatInteraction.rating, func.count(ChatInteraction.id))
+                .group_by(ChatInteraction.rating)
+                .all()
+            )
+
+            rating_distribution = {
+                "thumbs_up": 0,
+                "thumbs_down": 0,
+                "neutral": 0,
+                "no_rating": 0,
+            }
+
+            for rating, count in rating_stats:
+                if rating == 1:
+                    rating_distribution["thumbs_up"] = count
+                elif rating == -1:
+                    rating_distribution["thumbs_down"] = count
+                elif rating == 0:
+                    rating_distribution["neutral"] = count
+                else:  # NULL or None
+                    rating_distribution["no_rating"] = count
 
             # Category distribution
             category_counts = (
@@ -143,6 +216,7 @@ async def get_stats(api_key: str = Depends(verify_api_key)):
                     "response_time": round(conv.response_time, 2),
                     "tokens_used": conv.tokens_used,
                     "error_occurred": bool(conv.error_occurred),
+                    "rating": conv.rating,
                 }
                 for conv in conversations
             ]
@@ -153,6 +227,7 @@ async def get_stats(api_key: str = Depends(verify_api_key)):
                     round(avg_response_time, 2) if avg_response_time else 0
                 ),
                 "error_rate": round(error_rate * 100, 2) if error_rate else 0,
+                "rating_distribution": rating_distribution,
                 "category_distribution": dict(category_counts),
                 "conversations": conversation_history,
             }

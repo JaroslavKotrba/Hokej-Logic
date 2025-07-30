@@ -58,7 +58,7 @@ const Chat = () => {
             const response = await chatAPI.sendMessage(message, sessionId);
 
             const botMessage = {
-                id: Date.now() + 1,
+                id: response.message_id, // Use database ID
                 content: response.response,
                 isUser: false,
                 timestamp: new Date().toISOString(),
@@ -97,8 +97,8 @@ const Chat = () => {
             [messageId]: rating
         }));
 
-        // Here you could send the rating to your backend
-        console.log(`Message ${messageId} rated as: ${rating}`);
+        // Log the rating for debugging
+        console.log(`Message ${messageId} rated as: ${rating} (${rating === 1 ? 'thumbs up' : rating === -1 ? 'thumbs down' : 'neutral'})`);
     };
 
     const toggleChat = () => {

@@ -297,7 +297,7 @@ class CoreChatbot:
         logger.debug(f"Formatted history length: {len(formatted_history)} characters")
         return formatted_history
 
-    def get_response(self, user_input: str, session_id: str = "") -> str:
+    def get_response(self, user_input: str, session_id: str = "") -> tuple[str, int]:
         """
         Generate a response to user input using the language model
         """
@@ -361,6 +361,7 @@ class CoreChatbot:
                 f"Response time: {response_time:.2f}s, Tokens: {tokens_used}"
             )
 
+            message_id = None
             try:
                 with next(self.db.get_session()) as session:
                     interaction = ChatInteraction(
@@ -374,6 +375,7 @@ class CoreChatbot:
                     )
                     session.add(interaction)
                     session.commit()
+                    message_id = interaction.id
                 logger.debug("Interaction saved to database successfully")
             except Exception as db_error:
                 logger.error(f"Failed to save interaction to database: {str(db_error)}")
@@ -388,7 +390,7 @@ class CoreChatbot:
             logger.info(
                 f"Successful response for input: '{user_input[:100]}' -> '{answer[:50]}...'"
             )
-            return answer
+            return answer, message_id
 
         except Exception as e:
             error_occurred = 1
@@ -401,6 +403,7 @@ class CoreChatbot:
             logger.error(f"Error type: {type(e).__name__}")
             logger.error(f"Response time before error: {response_time:.2f}s")
 
+            error_message_id = None
             try:
                 with next(self.db.get_session()) as session:
                     interaction = ChatInteraction(
@@ -414,13 +417,14 @@ class CoreChatbot:
                     )
                     session.add(interaction)
                     session.commit()
+                    error_message_id = interaction.id
                 logger.debug("Error interaction saved to database")
             except Exception as db_error:
                 logger.error(
                     f"Failed to save error interaction to database: {str(db_error)}"
                 )
 
-            return error_msg
+            return error_msg, error_message_id
 
     def clear_conversation(self) -> None:
         """

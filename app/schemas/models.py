@@ -1,6 +1,6 @@
 from datetime import datetime
 from sqlalchemy import Column, Integer, String, DateTime, Float, Text
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel
 
 from ..database.database import Base
@@ -22,6 +22,9 @@ class ChatInteraction(Base):
     category = Column(String(50))
     tokens_used = Column(Integer)
     error_occurred = Column(Integer, default=0)
+    rating = Column(
+        Integer, nullable=True
+    )  # +1 for thumbs up, -1 for thumbs down, 0 not rated
 
 
 # Chat Related Models (pydantic models for request/response validation)
@@ -38,8 +41,20 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     response: str
     conversation_history: List[Message]
+    message_id: Optional[int] = None
 
 
 class ClearResponse(BaseModel):
     message: str
     status: bool
+
+
+class RatingRequest(BaseModel):
+    message_id: int
+    rating: int  # +1 for thumbs up, -1 for thumbs down, 0 for neutral
+
+
+class RatingResponse(BaseModel):
+    response_message: str
+    message_id: int
+    rating: int

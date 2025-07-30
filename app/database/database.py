@@ -20,8 +20,8 @@ class Database:
             # We're on Heroku, use JawsDB MySQL
             self.engine = create_engine(
                 database_url,
-                pool_size=8,  # Pool size
-                max_overflow=2,  # Limit of additional connections
+                pool_size=3,  # Small pool (3 out of 10 connections)
+                max_overflow=0,  # No overflow - strict limit
                 pool_recycle=300,  # Recycle connections every 5 minutes
                 pool_pre_ping=True,  # Test connections before use
                 pool_timeout=10,  # Wait max 10 seconds for connection
