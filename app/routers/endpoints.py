@@ -8,8 +8,8 @@ from datetime import datetime
 import time
 import psutil
 
+from ..database.db import db
 from ..schemas.models import ChatInteraction, ChatRequest, ChatResponse, ClearResponse
-from ..database import db
 from ..const.constants import VERSION
 
 # Configure logging for this router
@@ -71,8 +71,8 @@ async def chat(request: ChatRequest):
     """
 
     try:
-        # Use provided session_id or get current one from chatbot
-        session_id = request.session_id or chatbot.current_session_id
+        # Use provided session_id from frontend
+        session_id = request.session_id
         response = chatbot.get_response(request.message, session_id)
         return ChatResponse(
             response=response, conversation_history=chatbot.get_conversation_history()

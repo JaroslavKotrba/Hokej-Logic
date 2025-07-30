@@ -52,6 +52,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "https://hokejlogic.cz",  # Prod
+        "https://test.hokejlogic.cz",  # Test
+        "https://stg.hokejlogic.cz",  # Staging
         "https://hokej-logic-698f50f96dfe.herokuapp.com",  # Heroku
         "http://localhost:5173",  # Local React
     ],
@@ -61,11 +63,7 @@ app.add_middleware(
 )
 
 # Serve React app static files
-if os.path.exists("ui/dist/assets"):
-    app.mount("/assets", StaticFiles(directory="ui/dist/assets"), name="react-assets")
-    logger.info("✅ React assets mounted successfully")
-else:
-    logger.warning("⚠️ React assets not found - API only mode")
+app.mount("/assets", StaticFiles(directory="ui/dist/assets"), name="react-assets")
 
 # Chatbot initialization
 try:

@@ -16,9 +16,18 @@ const Chat = () => {
     const [ratings, setRatings] = useState({});
     const messagesEndRef = useRef(null);
 
-    // Generate session ID on component mount
+    // Generate or retrieve session ID on component mount
     useEffect(() => {
-        setSessionId(`session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`);
+        // Check if session ID already exists in localStorage
+        let existingSessionId = localStorage.getItem('chatSessionId');
+
+        if (!existingSessionId) {
+            // Generate new session ID if none exists
+            existingSessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+            localStorage.setItem('chatSessionId', existingSessionId);
+        }
+
+        setSessionId(existingSessionId);
     }, []);
 
     // Auto-scroll to bottom when new messages arrive

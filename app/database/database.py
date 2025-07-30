@@ -3,8 +3,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
-# Database initialization (base from sqlalchemy)
-Base = declarative_base()  # Base
+# Base initialization
+Base = declarative_base()
 
 
 class Database:
@@ -18,7 +18,14 @@ class Database:
 
         if database_url:
             # We're on Heroku, use JawsDB MySQL
-            self.engine = create_engine(database_url)
+            self.engine = create_engine(
+                database_url,
+                pool_size=8,  # Pool size
+                max_overflow=2,  # Limit of additional connections
+                pool_recycle=300,  # Recycle connections every 5 minutes
+                pool_pre_ping=True,  # Test connections before use
+                pool_timeout=10,  # Wait max 10 seconds for connection
+            )
         else:
             # We're local, use SQLite
             self.engine = create_engine("sqlite:///app/database/chatbot.db")

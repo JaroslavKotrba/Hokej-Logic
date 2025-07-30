@@ -10,9 +10,8 @@ from langchain.prompts import ChatPromptTemplate
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.chains import create_retrieval_chain
 
-from ..database import db
-from ..schemas.models import ChatInteraction
-from ..schemas.models import Message
+from ..database.db import db
+from ..schemas.models import ChatInteraction, Message
 from dotenv import load_dotenv
 
 # Logger
@@ -66,11 +65,8 @@ class CoreChatbot:
         self.config = config
         self.conversation_history: List[Dict[str, str]] = []
         self.db = db
-        self.current_session_id = str(uuid.uuid4())
 
-        logger.info(
-            f"Initializing CoreChatbot with session_id: {self.current_session_id}"
-        )
+        logger.info("Initializing CoreChatbot")
         logger.info("Loading models and initializing components...")
 
         # Initialize embedding model for text vectorization
@@ -307,7 +303,6 @@ class CoreChatbot:
         """
 
         # DB values
-        session_id = session_id or self.current_session_id
         start_time = time.time()
         error_occurred = 0
         tokens_used = 0
