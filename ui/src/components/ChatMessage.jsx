@@ -3,6 +3,82 @@ import { clsx } from 'clsx';
 import hokejLogo from '../assets/hokej-white.png';
 import MessageRating from './MessageRating';
 
+// Function to render message content with clickable links and bold text
+const renderMessageContent = (content) => {
+    if (!content) return content;
+
+    // First, handle links
+    const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+    let processedContent = content;
+    let linkMatches = [];
+    let linkMatch;
+
+    // Collect all link matches
+    while ((linkMatch = linkRegex.exec(content)) !== null) {
+        linkMatches.push({
+            fullMatch: linkMatch[0],
+            text: linkMatch[1],
+            url: linkMatch[2],
+            index: linkMatch.index
+        });
+    }
+
+    // Replace links with placeholders
+    linkMatches.forEach((match, index) => {
+        processedContent = processedContent.replace(match.fullMatch, `__LINK_${index}__`);
+    });
+
+    // Handle bold text
+    const boldRegex = /\*\*(.*?)\*\*/g;
+    let boldMatches = [];
+    let boldMatch;
+
+    // Collect all bold matches
+    while ((boldMatch = boldRegex.exec(processedContent)) !== null) {
+        boldMatches.push({
+            fullMatch: boldMatch[0],
+            text: boldMatch[1],
+            index: boldMatch.index
+        });
+    }
+
+    // Replace bold text with placeholders
+    boldMatches.forEach((match, index) => {
+        processedContent = processedContent.replace(match.fullMatch, `__BOLD_${index}__`);
+    });
+
+    // Split the content and replace placeholders
+    const parts = processedContent.split(/(__LINK_\d+__|__BOLD_\d+__)/);
+
+    return parts.map((part, index) => {
+        if (part.startsWith('__LINK_')) {
+            const linkIndex = parseInt(part.match(/\d+/)[0]);
+            const linkData = linkMatches[linkIndex];
+            return (
+                <a
+                    key={`link-${index}`}
+                    href={linkData.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:text-blue-800 underline"
+                >
+                    {linkData.text}
+                </a>
+            );
+        } else if (part.startsWith('__BOLD_')) {
+            const boldIndex = parseInt(part.match(/\d+/)[0]);
+            const boldData = boldMatches[boldIndex];
+            return (
+                <strong key={`bold-${index}`}>
+                    {boldData.text}
+                </strong>
+            );
+        } else {
+            return part;
+        }
+    });
+};
+
 const ChatMessage = ({ message, isUser, timestamp, messageId, onRate }) => {
     return (
         <div className={clsx(
@@ -25,9 +101,9 @@ const ChatMessage = ({ message, isUser, timestamp, messageId, onRate }) => {
                     ? "bg-[#e3f2fd] ml-auto"
                     : "bg-[#f5f5f5] mr-auto"
             )}>
-                <p className="text-sm whitespace-pre-wrap">
-                    {message}
-                </p>
+                <div className="text-sm whitespace-pre-wrap">
+                    {renderMessageContent(message)}
+                </div>
                 {timestamp && (
                     <p className={clsx(
                         "text-xs mt-2",
