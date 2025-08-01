@@ -40,8 +40,8 @@ const ChatMessage = ({ message, isUser, timestamp, messageId, onRate }) => {
                     </p>
                 )}
 
-                {/* Rating component for bot messages */}
-                {!isUser && onRate && (
+                {/* Rating component for bot messages - exclude welcome message */}
+                {!isUser && onRate && messageId !== 'welcome' && (
                     <MessageRating messageId={messageId} onRate={onRate} />
                 )}
             </div>

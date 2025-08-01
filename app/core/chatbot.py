@@ -330,8 +330,7 @@ class CoreChatbot:
             chain_time = time.time() - chain_start_time
             logger.debug(f"Retrieval chain completed in {chain_time:.2f}s")
 
-            # Remove asterisks from the response
-            answer = response["answer"].replace("*", "")
+            answer = response["answer"]
             logger.debug(
                 f"Raw response length: {len(response['answer'])}, Cleaned length: {len(answer)}"
             )

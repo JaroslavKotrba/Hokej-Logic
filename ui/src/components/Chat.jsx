@@ -14,6 +14,7 @@ const Chat = () => {
     const [sessionId, setSessionId] = useState('');
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [ratings, setRatings] = useState({});
+    const [hasShownWelcome, setHasShownWelcome] = useState(false);
     const messagesEndRef = useRef(null);
 
     // Generate or retrieve session ID on component mount
@@ -34,6 +35,20 @@ const Chat = () => {
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages]);
+
+    // Show welcome message when chat is first opened
+    useEffect(() => {
+        if (isChatOpen && !hasShownWelcome) {
+            const welcomeMessage = {
+                id: 'welcome',
+                content: '👋 Ahoj! Jsem váš asistent pro hokejlogic.cz. Jak vám mohu pomoci?',
+                isUser: false,
+                timestamp: new Date().toISOString(),
+            };
+            setMessages([welcomeMessage]);
+            setHasShownWelcome(true);
+        }
+    }, [isChatOpen, hasShownWelcome]);
 
     const sendMessage = async (message) => {
         if (!message.trim()) return;
@@ -81,6 +96,7 @@ const Chat = () => {
             await chatAPI.clearConversation();
             setMessages([]);
             setError(null);
+            setHasShownWelcome(false); // Reset welcome message state
         } catch (err) {
             setError('Failed to clear conversation');
             console.error('Error clearing chat:', err);

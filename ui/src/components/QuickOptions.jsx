@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 const QuickOptions = ({ onOptionClick }) => {
-    const [isCollapsed, setIsCollapsed] = useState(false);
+    const [isCollapsed, setIsCollapsed] = useState(true);
 
     const quickOptions = [
         {
