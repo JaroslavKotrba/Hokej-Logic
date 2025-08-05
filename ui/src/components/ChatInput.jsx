@@ -38,17 +38,17 @@ const ChatInput = ({ onSendMessage, onClearChat, isLoading }) => {
                     onChange={(e) => setMessage(e.target.value)}
                     onKeyPress={handleKeyPress}
                     placeholder="Napište svou zprávu..."
-                    className="w-full p-3 pr-20 border border-gray-300 rounded-lg resize-none font-inherit min-h-[44px] max-h-[100px] leading-relaxed text-base"
+                    className="w-full p-3 pr-24 border border-gray-300 rounded-lg resize-none font-inherit min-h-[44px] max-h-[100px] leading-relaxed text-base"
                     rows={1}
                     disabled={isLoading}
                     style={{ fontSize: '16px' }} // Prevents zoom on iOS
                 />
 
-                <div className="absolute right-2 flex gap-1">
+                <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex gap-1">
                     <button
                         type="button"
                         onClick={onClearChat}
-                        className="p-1 text-gray-500 hover:text-red-500 transition-colors duration-200 min-w-[32px] min-h-[32px]"
+                        className="p-1 text-gray-500 hover:text-red-500 transition-colors duration-200 min-w-[32px] min-h-[32px] flex items-center justify-center"
                         title="Vymazat konverzaci"
                     >
                         <Trash2 className="w-4 h-4" />

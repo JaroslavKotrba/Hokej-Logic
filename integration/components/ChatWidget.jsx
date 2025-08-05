@@ -36,7 +36,6 @@ const ChatWidget = () => {
         { text: 'Jak filtrovat hráče v tabulce? 🔍' }
     ];
 
-    // Rest of your existing code remains the same...
     useEffect(() => {
         let storedId = localStorage.getItem('chatSessionId');
         if (!storedId) {

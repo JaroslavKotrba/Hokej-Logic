@@ -154,6 +154,22 @@
   .bg-white {
     border-radius: 16px !important;
   }
+
+  /* Chat input mobile improvements */
+  .pr-24 {
+    padding-right: 6rem !important;
+  }
+
+  /* Ensure buttons don't overlap text */
+  .absolute.right-2 {
+    right: 8px !important;
+  }
+
+  /* Better textarea sizing on mobile */
+  textarea {
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+  }
 }
 
 /* iPhone specific fixes */
