@@ -4,6 +4,7 @@
 // https://nodejs.org/en/download
 
 // npm run dev
+// npm run build
 
 // go to root project folder
 // npm create vite@latest ui -- --template react
