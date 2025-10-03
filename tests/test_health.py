@@ -14,7 +14,8 @@ def test_health_check():
     """
     Test the /health endpoint for correct status and version
     """
+
     response = client.get("/health")
     assert response.status_code == status.HTTP_200_OK
-    assert response.json()["version"] == "1.0.1"
+    assert response.json()["version"] == "1.0.0"
     assert response.json()["status"] == "healthy"

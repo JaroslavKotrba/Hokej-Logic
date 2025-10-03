@@ -16,6 +16,7 @@ def test_stats_endpoint_missing_api_key():
     """
     Test /stats endpoint without API key, should return 401 or 403
     """
+
     response = client.get("/stats")
     assert response.status_code in (
         status.HTTP_401_UNAUTHORIZED,
@@ -27,6 +28,7 @@ def test_stats_endpoint_invalid_api_key():
     """
     Test /stats endpoint without API key, should return 401 or 403
     """
+
     response = client.get("/stats", headers={"X-API-Key": "invalid_key"})
     assert response.status_code in (
         status.HTTP_401_UNAUTHORIZED,
@@ -38,6 +40,7 @@ def test_stats_endpoint_response_types():
     """
     Test /stats endpoint with valid API key, should return 200 OK
     """
+
     api_key = os.getenv("ADMIN_API_KEY")
 
     if not api_key:
