@@ -5,6 +5,7 @@
 # pytest tests/test_chat.py -v --disable-warnings
 
 import logging
+import sqlite3
 from starlette import status
 from fastapi.testclient import TestClient
 from app.main import app
@@ -21,7 +22,7 @@ def test_chat_endpoint_success():
     Test chat endpoint with context: initial and follow-up message using the same session_id
     """
 
-    session_id = "test_123"
+    session_id = "test_session_1"
 
     first_request = {"message": "Co znamená zkratka P.En?", "session_id": session_id}
 
@@ -34,6 +35,8 @@ def test_chat_endpoint_success():
     assert isinstance(first_data["response"], str)
     assert isinstance(first_data["conversation_history"], list)
     assert len(first_data["response"]) > 0
+
+    session_id = "test_session_2"
 
     followup_request = {"message": "A co znamená zkratka G?", "session_id": session_id}
 
@@ -50,3 +53,25 @@ def test_chat_endpoint_success():
     # Optionally, check that conversation history has grown
     assert len(followup_data["conversation_history"]) >= 2
     logger.info(f"Follow-up chat response: {followup_data['response']}")
+
+    # Cleanup: Delete test data from database after test
+    try:
+        # Clean up from sqlite database
+        conn = sqlite3.connect("app/database/chatbot.db")
+        cursor = conn.cursor()
+
+        # Delete both test sessions
+        cursor.execute(
+            "DELETE FROM chat_interactions WHERE session_id = ?", ("test_session_1",)
+        )
+        cursor.execute(
+            "DELETE FROM chat_interactions WHERE session_id = ?", ("test_session_2",)
+        )
+
+        conn.commit()
+        conn.close()
+        logger.info(
+            "Cleaned up test data for both test_session_1 and test_session_2 from production database"
+        )
+    except Exception as e:
+        logger.warning(f"Failed to clean up test data: {e}")
